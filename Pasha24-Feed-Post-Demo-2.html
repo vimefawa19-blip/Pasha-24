@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<title>Pasha 24</title>
+<style>
+:root{--bg:#090d16;--panel:#121a29;--panel2:#182337;--text:#f4f7ff;--muted:#9aa8bd;--accent:#7c5cff;--line:#26334a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;padding-bottom:82px}
+header{position:sticky;top:0;z-index:5;background:#090d16ed;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:23px;font-weight:900;letter-spacing:.2px}.brand span{color:#9d89ff}.tag{font-size:10px;color:var(--muted);letter-spacing:1.4px}
+.avatar{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#7c5cff,#24c6dc);display:grid;place-items:center;font-weight:900}
+main{max-width:620px;margin:auto;padding:16px}
+.welcome{padding:18px;border-radius:20px;background:linear-gradient(135deg,#21194b,#14283b 75%);margin-bottom:16px}
+.welcome h1{font-size:22px;margin:0 0 6px}.welcome p{margin:0;color:#c5cbe0;font-size:13px}
+.section-title{font-weight:800;margin:20px 2px 12px}
+.chips{display:flex;gap:8px;overflow:auto;padding:2px 0 12px}
+.chip{white-space:nowrap;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:30px;padding:8px 14px;font-size:13px}
+.chip.active{background:var(--accent);border-color:var(--accent);color:white}
+.composer,.post{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:13px}
+.composer-row{display:flex;gap:10px;align-items:center}.fake-input{flex:1;background:var(--panel2);border-radius:24px;padding:11px 14px;color:var(--muted);font-size:13px}
+.post-head{display:flex;align-items:center;gap:10px}.mini-avatar{width:35px;height:35px;border-radius:12px;background:#293b5a;display:grid;place-items:center;font-weight:800}
+.post-name{font-size:13px;font-weight:800}.post-time{font-size:11px;color:var(--muted)}
+.post p{font-size:14px;line-height:1.65;margin:12px 0}
+.post-media{width:100%;max-height:360px;object-fit:contain;border-radius:13px;background:#080c14;margin:10px 0}.post-art{height:150px;border-radius:14px;background:linear-gradient(135deg,#29205c,#153c50);display:flex;align-items:center;justify-content:center;text-align:center;font-size:36px;margin:10px 0}
+.post-art small{display:block;font-size:12px;color:#d7dcf1}
+.actions{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:11px}
+.action{border:0;background:var(--panel2);color:#cbd5e7;border-radius:10px;padding:9px 12px;font-size:12px;flex:1}
+.action.liked{color:#ff7d9c}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:8;background:#0d1422f2;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom))}
+.navitem{color:var(--muted);font-size:10px;text-align:center;border:0;background:none}.navitem b{display:block;font-size:19px;margin-bottom:2px}.navitem.active{color:#b4a6ff}
+.notice{color:var(--muted);font-size:11px;text-align:center;margin:18px 0}
+#toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:#283653;color:white;padding:10px 15px;border-radius:12px;font-size:12px;display:none;z-index:10}
+</style>
+</head>
+<body>
+<header><div><div class="brand">পাশা <span>24</span></div><div class="tag">ENTERTAINMENT • NEWS • FUN</div></div><div class="avatar">P</div></header>
+<main>
+ <section class="welcome"><h1>স্বাগতম Pasha 24-এ 👋</h1><p>খবর, খেলাধুলা আর বিনোদনের মজার দুনিয়া—সব এক জায়গায়।</p></section>
+ <div class="section-title">এক্সপ্লোর করো</div>
+ <div class="chips"><button class="chip active" onclick="filterPosts('সব')">সব</button><button class="chip" onclick="filterPosts('বিনোদন')">বিনোদন</button><button class="chip" onclick="filterPosts('খেলাধুলা')">খেলাধুলা</button><button class="chip" onclick="filterPosts('মজার পোস্ট')">মজার পোস্ট</button></div>
+ <section class="composer">
+  <div class="composer-row"><div class="avatar">P</div><div style="font-weight:800;font-size:14px">নতুন পোস্ট তৈরি করো</div></div>
+  <textarea id="postText" placeholder="কী শেয়ার করতে চাও?" style="width:100%;margin-top:12px;min-height:78px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:12px;font:inherit;font-size:13px;outline:none"></textarea>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+   <select id="postCategory" style="flex:1;min-width:120px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px"><option>বিনোদন</option><option>খেলাধুলা</option><option>মজার পোস্ট</option></select>
+   <label class="action" style="display:block;text-align:center;cursor:pointer">📷 ছবি / ভিডিও <input id="mediaFile" type="file" accept="image/*,video/*" style="display:none" onchange="previewMedia(event)"></label>
+   <button class="action" onclick="publishPost()" style="background:#7658f5;color:white;font-weight:800">পোস্ট করো</button>
+  </div>
+  <div id="mediaPreview" style="margin-top:10px"></div>
+ </section>
+ <div class="section-title" id="feedTitle">সর্বশেষ পোস্ট</div>
+ <div id="feed">
+  <article class="post" data-category="বিনোদন"><div class="post-head"><div class="mini-avatar">P</div><div><div class="post-name">Pasha 24 <span style="color:#9d89ff">✓</span></div><div class="post-time">বিনোদন • ডেমো পোস্ট</div></div></div><p>বিনোদনের নতুন ঠিকানা—Pasha 24! 😎 তোমাদের দিনটা হোক হাসি আর আনন্দে ভরা।</p><div class="post-art">🎬<div><small>ENTERTAINMENT ZONE</small></div></div><div class="actions"><button class="action" onclick="likePost(this)">♡ লাইক</button><button class="action" onclick="sharePost()">↗ শেয়ার</button><button class="action" onclick="toast('কমেন্ট ফিচার পরে যোগ হবে')">▢ মন্তব্য</button></div></article>
+  <article class="post" data-category="খেলাধুলা"><div class="post-head"><div class="mini-avatar">⚽</div><div><div class="post-name">Pasha 24 Sports</div><div class="post-time">খেলাধুলা • ডেমো পোস্ট</div></div></div><p>খেলার দুনিয়ার আপডেট পেতে চোখ রাখো Pasha 24-এ। ⚽</p><div class="post-art">⚽<div><small>SPORTS UPDATE</small></div></div><div class="actions"><button class="action" onclick="likePost(this)">♡ লাইক</button><button class="action" onclick="sharePost()">↗ শেয়ার</button><button class="action" onclick="toast('কমেন্ট ফিচার পরে যোগ হবে')">▢ মন্তব্য</button></div></article>
+  <article class="post" data-category="মজার পোস্ট"><div class="post-head"><div class="mini-avatar">😂</div><div><div class="post-name">Pasha 24 Fun</div><div class="post-time">মজার পোস্ট • ডেমো পোস্ট</div></div></div><p>বন্ধু যখন বলে, “আমি ৫ মিনিটে আসছি”—তারপর ১ ঘণ্টা পার! 😂</p><div class="post-art">😂<div><small>JUST FOR FUN</small></div></div><div class="actions"><button class="action" onclick="likePost(this)">♡ লাইক</button><button class="action" onclick="sharePost()">↗ শেয়ার</button><button class="action" onclick="toast('কমেন্ট ফিচার পরে যোগ হবে')">▢ মন্তব্য</button></div></article>
+ </div>
+ <div class="notice">এটি Pasha 24-এর লোকাল ডেমো। তোমার তৈরি পোস্ট এই ব্রাউজার সেশনে দেখা যাবে; অন্যদের কাছে প্রকাশ হবে না।</div>
+</main>
+<nav><button class="navitem active" onclick="navTap(this,'হোম')"><b>⌂</b>হোম</button><button class="navitem" onclick="navTap(this,'ভিডিও')"><b>▷</b>ভিডিও</button><button class="navitem" onclick="navTap(this,'খেলা')"><b>⚽</b>খেলা</button><button class="navitem" onclick="navTap(this,'প্রোফাইল')"><b>◉</b>প্রোফাইল</button></nav>
+<div id="toast"></div>
+<script>
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>t.style.display='none',2300)}
+function likePost(btn){let on=btn.classList.toggle('liked');btn.textContent=on?'♥ লাইক':'♡ লাইক'}
+function sharePost(){if(navigator.share){navigator.share({title:'Pasha 24',text:'Pasha 24 — Entertainment, News & Fun'}).catch(()=>{})}else toast('Pasha 24 — শেয়ার অপশন তোমার ফোনে পাওয়া যায়নি')}
+function filterPosts(cat){document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.textContent===cat));document.querySelectorAll('.post').forEach(p=>p.style.display=(cat==='সব'||p.dataset.category===cat)?'block':'none');document.getElementById('feedTitle').textContent=cat==='সব'?'সর্বশেষ পোস্ট':cat+' পোস্ট'}
+function navTap(btn,name){document.querySelectorAll('.navitem').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(name!=='হোম')toast(name+' পেজ পরের ধাপে তৈরি করব')}
+let selectedMedia=null;
+function previewMedia(e){const f=e.target.files&&e.target.files[0];if(!f)return;if(!f.type.startsWith('image/')&&!f.type.startsWith('video/')){toast('ছবি বা ভিডিও ফাইল বেছে নাও');return}selectedMedia=f;const url=URL.createObjectURL(f);const box=document.getElementById('mediaPreview');box.innerHTML='';const el=document.createElement(f.type.startsWith('video/')?'video':'img');el.src=url;el.className='post-media';if(el.tagName==='VIDEO'){el.controls=true;el.playsInline=true}box.appendChild(el)}
+function publishPost(){const textValue=document.getElementById('postText').value.trim();if(!textValue&&!selectedMedia){toast('লেখা বা ছবি/ভিডিও যোগ করো');return}const cat=document.getElementById('postCategory').value;const card=document.createElement('article');card.className='post';card.dataset.category=cat;const head=document.createElement('div');head.className='post-head';head.innerHTML='<div class="mini-avatar">P</div><div><div class="post-name">তুমি</div><div class="post-time">'+cat+' • এইমাত্র</div></div>';card.appendChild(head);if(textValue){const para=document.createElement('p');para.textContent=textValue;card.appendChild(para)}if(selectedMedia){const url=URL.createObjectURL(selectedMedia);const el=document.createElement(selectedMedia.type.startsWith('video/')?'video':'img');el.src=url;el.className='post-media';if(el.tagName==='VIDEO'){el.controls=true;el.playsInline=true}card.appendChild(el)}const actions=document.createElement('div');actions.className='actions';actions.innerHTML='<button class="action" onclick="likePost(this)">♡ লাইক</button><button class="action" onclick="sharePost()">↗ শেয়ার</button><button class="action" onclick="toast('কমেন্ট ফিচার পরে যোগ হবে')">▢ মন্তব্য</button>';card.appendChild(actions);document.getElementById('feed').prepend(card);document.getElementById('postText').value='';document.getElementById('mediaPreview').innerHTML='';document.getElementById('mediaFile').value='';selectedMedia=null;toast('তোমার পোস্টটি এই ডেমোতে যোগ হয়েছে')}
+
+</script>
+
+</body>
+</html>
